@@ -1,8 +1,9 @@
-import * as dotenv from 'dotenv';
 import axios from 'axios';
+import * as dotenv from 'dotenv';
 import moment from 'moment';
 import * as fs from 'fs';
 import * as path from 'path';
+import { request } from '../utils/request';
 
 // Load environment variables (optional for this script)
 dotenv.config();
@@ -10,7 +11,7 @@ dotenv.config();
 // Simple fetch function that doesn't require full config
 async function fetchData(url: string): Promise<any> {
     try {
-        const response = await axios.get(url, {
+        const response = await request.get(url, {
             timeout: 10000,
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',

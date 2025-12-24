@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { ENV } from '../config/env';
+import { request } from '../utils/request';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -26,7 +27,7 @@ const fetchData = async (url: string) => {
 
     for (let attempt = 1; attempt <= retries; attempt++) {
         try {
-            const response = await axios.get(url, {
+            const response = await request.get(url, {
                 timeout,
                 headers: {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',

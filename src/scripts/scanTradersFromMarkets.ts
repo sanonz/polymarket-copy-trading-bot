@@ -1,8 +1,8 @@
-import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import moment from 'moment';
 import { ENV } from '../config/env';
+import { request } from '../utils/request';
 
 // Simple colors without chalk (to avoid ESM issues)
 const colors = {
@@ -133,7 +133,7 @@ async function validateAddressesBatch(addresses: string[]): Promise<string[]> {
     for (const chunk of chunks) {
         const promises = chunk.map(async (address) => {
             try {
-                const response = await axios.get(
+                const response = await request.get(
                     `https://data-api.polymarket.com/activity?user=${address}&type=TRADE&limit=1`,
                     {
                         timeout: 5000,
@@ -187,7 +187,7 @@ async function extractTradersFromMarkets(markets: any[]): Promise<string[]> {
 
                     if (tokenId) {
                         try {
-                            const ordersResponse = await axios.get(
+                            const ordersResponse = await request.get(
                                 `https://clob.polymarket.com/book?token_id=${tokenId}`,
                                 {
                                     timeout: 3000,
@@ -240,7 +240,7 @@ async function expandNetworkFromTrader(
     depth: number = 200
 ): Promise<string[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${depth}`,
             {
                 timeout: 10000,
@@ -278,7 +278,7 @@ async function discoverTradersFromRandomActivities(): Promise<Set<string>> {
 
         let allMarkets: any[] = [];
         try {
-            const marketResponse = await axios.get(
+            const marketResponse = await request.get(
                 `https://gamma-api.polymarket.com/markets?limit=${MAX_MARKETS_TO_SCAN}&closed=false`,
                 {
                     timeout: 15000,
@@ -428,7 +428,7 @@ async function fetchTraderActivityBatch(
     sinceTimestamp: number
 ): Promise<Trade[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
             {
                 timeout: 10000,
@@ -510,7 +510,7 @@ async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
 
 async function fetchTraderPositions(traderAddress: string): Promise<Position[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/positions?user=${traderAddress}`,
             {
                 timeout: 10000,

@@ -1,7 +1,7 @@
-import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ENV } from '../config/env';
+import { request } from '../utils/request';
 
 // Colors for console output
 const colors = {
@@ -93,7 +93,7 @@ async function fetchTraderLeaderboard(): Promise<string[]> {
         console.log(colors.cyan('📊 Fetching trader leaderboard from Polymarket...'));
 
         // Try to get top traders from events/markets
-        const response = await axios.get('https://data-api.polymarket.com/markets', {
+        const response = await request.get('https://data-api.polymarket.com/markets', {
             timeout: 10000,
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -108,7 +108,7 @@ async function fetchTraderLeaderboard(): Promise<string[]> {
         for (const market of markets) {
             try {
                 const tradesUrl = `https://data-api.polymarket.com/trades?market=${market.conditionId}&limit=100`;
-                const tradesResp = await axios.get(tradesUrl, { timeout: 5000 });
+                const tradesResp = await request.get(tradesUrl, { timeout: 5000 });
 
                 tradesResp.data.forEach((trade: any) => {
                     if (trade.owner) {
@@ -139,7 +139,7 @@ async function fetchBatch(
     sinceTimestamp: number
 ): Promise<Trade[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
             {
                 timeout: 10000,
@@ -224,7 +224,7 @@ async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
 
 async function fetchTraderPositions(traderAddress: string): Promise<Position[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/positions?user=${traderAddress}`,
             {
                 timeout: 10000,

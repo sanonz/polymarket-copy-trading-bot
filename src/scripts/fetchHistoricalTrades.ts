@@ -1,7 +1,7 @@
-import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import { ENV } from '../config/env';
+import { request } from '../utils/request';
 
 const USER_ADDRESSES = ENV.USER_ADDRESSES;
 
@@ -59,7 +59,7 @@ const fetchBatch = async (
     offset: number,
     limit: number
 ): Promise<TradeApiResponse[]> => {
-    const response = await axios.get(
+    const response = await request.get(
         `https://data-api.polymarket.com/activity?user=${address}&type=TRADE&limit=${limit}&offset=${offset}`,
         {
             timeout: 15000,

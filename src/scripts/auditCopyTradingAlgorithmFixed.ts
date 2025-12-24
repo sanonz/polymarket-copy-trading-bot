@@ -1,7 +1,7 @@
-import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ENV } from '../config/env';
+import { request } from '../utils/request';
 
 // Console colors
 const colors = {
@@ -163,7 +163,7 @@ async function fetchBatch(
     sinceTimestamp: number
 ): Promise<Trade[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
             {
                 timeout: 10000,
@@ -248,7 +248,7 @@ async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
 
 async function fetchTraderPositions(traderAddress: string): Promise<Position[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/positions?user=${traderAddress}`,
             {
                 timeout: 10000,

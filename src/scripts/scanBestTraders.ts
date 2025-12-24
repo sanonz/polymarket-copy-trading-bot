@@ -1,7 +1,7 @@
-import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ENV } from '../config/env';
+import { request } from '../utils/request';
 
 // Colors for console output
 const colors = {
@@ -142,7 +142,7 @@ async function fetchActiveMarkets(limit: number = 50): Promise<any[]> {
         // Get markets from recent trades of seed traders
         for (const trader of seedTraders) {
             try {
-                const response = await axios.get(
+                const response = await request.get(
                     `https://data-api.polymarket.com/activity?user=${trader}&type=TRADE&limit=50`,
                     {
                         timeout: 10000,
@@ -187,7 +187,7 @@ async function fetchActiveMarkets(limit: number = 50): Promise<any[]> {
 
 async function fetchRecentTrades(traderAddress: string, limit: number = 100): Promise<Bet[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}`,
             {
                 timeout: 10000,
@@ -356,7 +356,7 @@ async function fetchTraderActivityBatch(
     sinceTimestamp: number
 ): Promise<Trade[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
             {
                 timeout: 10000,
@@ -445,7 +445,7 @@ async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
 
 async function fetchTraderPositions(traderAddress: string): Promise<Position[]> {
     try {
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/positions?user=${traderAddress}`,
             {
                 timeout: 10000,

@@ -5,7 +5,7 @@ import tradeExecutor, { stopTradeExecutor } from './services/tradeExecutor';
 import tradeMonitor, { stopTradeMonitor } from './services/tradeMonitor';
 import Logger from './utils/logger';
 import { performHealthCheck, logHealthCheck } from './utils/healthCheck';
-import test from './test/test';
+// import test from './test/test';
 
 const USER_ADDRESSES = ENV.USER_ADDRESSES;
 const PROXY_WALLET = ENV.PROXY_WALLET;
@@ -70,11 +70,11 @@ export const main = async () => {
             yellow: '\x1b[33m',
             cyan: '\x1b[36m',
         };
-        
+
         console.log(`\n${colors.yellow}💡 First time running the bot?${colors.reset}`);
         console.log(`   Read the guide: ${colors.cyan}GETTING_STARTED.md${colors.reset}`);
         console.log(`   Run health check: ${colors.cyan}npm run health-check${colors.reset}\n`);
-        
+
         await connectDB();
         Logger.startup(USER_ADDRESSES, PROXY_WALLET);
 

@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { ENV } from '../config/env';
 import getMyBalance from '../utils/getMyBalance';
+import { request } from '../utils/request';
 
 // Simple console colors without chalk
 const colors = {
@@ -106,7 +106,7 @@ const MAX_TRADES_LIMIT = (() => {
 })(); // Ограничение на количество трейдов для быстрого тестирования
 
 async function fetchBatch(offset: number, limit: number, sinceTimestamp: number): Promise<Trade[]> {
-    const response = await axios.get(
+    const response = await request.get(
         `https://data-api.polymarket.com/activity?user=${TRADER_ADDRESS}&type=TRADE&limit=${limit}&offset=${offset}`,
         {
             timeout: 10000,
@@ -241,7 +241,7 @@ async function fetchTraderActivity(): Promise<Trade[]> {
 async function fetchTraderPositions(): Promise<Position[]> {
     try {
         console.log(colors.cyan('📈 Fetching trader positions...'));
-        const response = await axios.get(
+        const response = await request.get(
             `https://data-api.polymarket.com/positions?user=${TRADER_ADDRESS}`,
             {
                 timeout: 10000,
