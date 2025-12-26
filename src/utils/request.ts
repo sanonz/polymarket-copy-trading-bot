@@ -1,10 +1,21 @@
-import axios from 'axios';
+import axios, { AxiosProxyConfig } from 'axios';
 import { ENV } from '../config/env';
 
-export const request = axios.create({
-    proxy: {
-        host: ENV.PROXY_HOST,
-        port: ENV.PROXY_PORT,
-        protocol: ENV.PROXY_PROTOCOL,
-    },
-});
+const proxyUrl =
+    process.env.https_proxy ||
+    process.env.HTTPS_PROXY ||
+    process.env.http_proxy ||
+    process.env.HTTP_PROXY;
+
+let proxy: AxiosProxyConfig | false = false;
+
+if (proxyUrl) {
+    const url = new URL(proxyUrl);
+    proxy = {
+        host: url.hostname,
+        port: Number(url.port),
+        protocol: url.protocol.replace(':', ''),
+    };
+}
+
+export const request = axios.create({ proxy });
