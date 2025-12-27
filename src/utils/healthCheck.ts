@@ -109,8 +109,7 @@ export const performHealthCheck = async (): Promise<HealthCheckResult> => {
 
     // Check Polymarket API
     try {
-        const testUrl =
-            'https://data-api.polymarket.com/positions?user=0x0000000000000000000000000000000000000000';
+        const testUrl = ENV.POLYMARKET_TEST_URL;
         await fetchData(testUrl);
         checks.polymarketApi = { status: 'ok', message: 'API responding' };
     } catch (error) {
