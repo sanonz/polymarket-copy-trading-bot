@@ -367,4 +367,7 @@ export const ENV = {
     PROXY_PROTOCOL: process.env.PROXY_PROTOCOL || 'http',
     PROXY_HOST: process.env.PROXY_HOST || '',
     PROXY_PORT: process.env.PROXY_PORT ? parseInt(process.env.PROXY_PORT, 10) : 0,
+    TELEGRAM_API: process.env.TELEGRAM_API || '',
+    TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN || '',
+    TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID || '',
 };

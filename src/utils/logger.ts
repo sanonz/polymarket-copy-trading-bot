@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
+import { UserActivityInterface } from '../interfaces/User';
+import { addEscape, sendMessageToTelegram } from './notification';
 
 class Logger {
     private static logsDir = path.join(process.cwd(), 'logs');
@@ -122,13 +124,29 @@ class Logger {
         );
     }
 
-    static orderResult(success: boolean, message: string) {
+    static orderResult(success: boolean, message: string, trade: UserActivityInterface) {
         if (success) {
             console.log(chalk.green('✓'), chalk.green.bold('Order executed:'), message);
             this.writeToFile(`ORDER SUCCESS: ${message}`);
+            sendMessageToTelegram(
+                [
+                    `[${addEscape(trade.title)}](https://polymarket.com/event/${trade.slug})`,
+                    `✅ Order executed: ${this.stripAnsi(message)}`,
+                ].join('\n')
+            )
+                .then(console.log)
+                .catch(console.error);
         } else {
             console.log(chalk.red('✗'), chalk.red.bold('Order failed:'), message);
             this.writeToFile(`ORDER FAILED: ${message}`);
+            sendMessageToTelegram(
+                [
+                    `[${addEscape(trade.title)}](https://polymarket.com/event/${trade.slug})`,
+                    `❌ Order failed: ${this.stripAnsi(message)}`,
+                ].join('\n')
+            )
+                .then(console.log)
+                .catch(console.error);
         }
     }
 

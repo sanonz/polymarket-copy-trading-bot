@@ -131,7 +131,8 @@ const postOrder = async (
                 retry = 0;
                 Logger.orderResult(
                     true,
-                    `Sold ${order_arges.amount} tokens at $${order_arges.price}`
+                    `Sold ${order_arges.amount} tokens at $${order_arges.price}`,
+                    trade
                 );
                 remaining -= order_arges.amount;
             } else {
@@ -254,7 +255,8 @@ const postOrder = async (
                 totalBoughtTokens += tokensBought;
                 Logger.orderResult(
                     true,
-                    `Bought $${order_arges.amount.toFixed(2)} at $${order_arges.price} (${tokensBought.toFixed(2)} tokens)`
+                    `Bought $${order_arges.amount.toFixed(2)} at $${order_arges.price} (${tokensBought.toFixed(2)} tokens)`,
+                    trade
                 );
                 remaining -= order_arges.amount;
             } else {
@@ -444,7 +446,8 @@ const postOrder = async (
                 totalSoldTokens += order_arges.amount;
                 Logger.orderResult(
                     true,
-                    `Sold ${order_arges.amount} tokens at $${order_arges.price}`
+                    `Sold ${order_arges.amount} tokens at $${order_arges.price}`,
+                    trade
                 );
                 remaining -= order_arges.amount;
             } else {
