@@ -37,7 +37,7 @@ const checkProxyWallet = async () => {
 
         // 2. Check activity on EOA
         console.log('🔎 CHECKING ACTIVITY ON MAIN WALLET (EOA):\n');
-        const eoaActivityUrl = `https://data-api.polymarket.com/activity?user=${eoaAddress}&type=TRADE`;
+        const eoaActivityUrl = `${ENV.POLYMARKET_URL}/activity?user=${eoaAddress}&type=TRADE`;
         const eoaActivities: Activity[] = await fetchData(eoaActivityUrl);
 
         console.log(`   Address: ${eoaAddress}`);
@@ -73,7 +73,7 @@ const checkProxyWallet = async () => {
 
         // 3. Check activity on Proxy Wallet
         console.log('🔎 CHECKING ACTIVITY ON PROXY WALLET (CONTRACT):\n');
-        const proxyActivityUrl = `https://data-api.polymarket.com/activity?user=${PROXY_WALLET}&type=TRADE`;
+        const proxyActivityUrl = `${ENV.POLYMARKET_URL}/activity?user=${PROXY_WALLET}&type=TRADE`;
         const proxyActivities: Activity[] = await fetchData(proxyActivityUrl);
 
         console.log(`   Address: ${PROXY_WALLET}`);

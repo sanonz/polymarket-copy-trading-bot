@@ -19,7 +19,7 @@ interface Activity {
 }
 
 const main = async () => {
-    const url = `https://data-api.polymarket.com/activity?user=${WALLET}&type=TRADE`;
+    const url = `${ENV.POLYMARKET_URL}/activity?user=${WALLET}&type=TRADE`;
     const activities: Activity[] = await fetchData(url);
 
     if (!Array.isArray(activities) || activities.length === 0) {

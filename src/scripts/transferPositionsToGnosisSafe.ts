@@ -38,7 +38,7 @@ async function transferPositions() {
     console.log('📋 ШАГ 1: Получение позиций на EOA\n');
 
     const positions: Position[] = await fetchData(
-        `https://data-api.polymarket.com/positions?user=${EOA_ADDRESS}`
+        `${ENV.POLYMARKET_URL}/positions?user=${EOA_ADDRESS}`
     );
 
     if (!positions || positions.length === 0) {
@@ -182,11 +182,11 @@ async function transferPositions() {
     await new Promise((resolve) => setTimeout(resolve, 5000));
 
     const eoaPositionsAfter: Position[] = await fetchData(
-        `https://data-api.polymarket.com/positions?user=${EOA_ADDRESS}`
+        `${ENV.POLYMARKET_URL}/positions?user=${EOA_ADDRESS}`
     );
 
     const gnosisPositionsAfter: Position[] = await fetchData(
-        `https://data-api.polymarket.com/positions?user=${GNOSIS_SAFE_ADDRESS}`
+        `${ENV.POLYMARKET_URL}/positions?user=${GNOSIS_SAFE_ADDRESS}`
     );
 
     console.log('📊 ПОСЛЕ ПЕРЕНОСА:\n');

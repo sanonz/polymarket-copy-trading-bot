@@ -47,7 +47,7 @@ const checkDiscrepancy = async () => {
         // 1. Get all positions (open and closed)
         console.log('📊 Fetching data from Polymarket API...\n');
 
-        const positionsUrl = `https://data-api.polymarket.com/positions?user=${PROXY_WALLET}`;
+        const positionsUrl = `${ENV.POLYMARKET_URL}/positions?user=${PROXY_WALLET}`;
         const positions: Position[] = await fetchData(positionsUrl);
 
         console.log(`Fetched positions: ${positions.length}\n`);
@@ -133,7 +133,7 @@ const checkDiscrepancy = async () => {
 
         // 6. Check through trade history
         console.log('🔎 CHECK THROUGH TRADE HISTORY:\n');
-        const activityUrl = `https://data-api.polymarket.com/activity?user=${PROXY_WALLET}&type=TRADE`;
+        const activityUrl = `${ENV.POLYMARKET_URL}/activity?user=${PROXY_WALLET}&type=TRADE`;
         const activities: Activity[] = await fetchData(activityUrl);
 
         // Group trades by markets

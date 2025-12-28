@@ -190,7 +190,7 @@ const sellEntirePosition = async (
 };
 
 const loadPositions = async (address: string): Promise<Position[]> => {
-    const url = `https://data-api.polymarket.com/positions?user=${address}`;
+    const url = `${ENV.POLYMARKET_URL}/positions?user=${address}`;
     const data = await fetchData(url);
     const positions = Array.isArray(data) ? (data as Position[]) : [];
     return positions.filter((pos) => (pos.size || 0) > ZERO_THRESHOLD);

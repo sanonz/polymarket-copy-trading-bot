@@ -51,7 +51,7 @@ const checkMyStats = async () => {
 
         // 2. Open Positions
         console.log('📊 OPEN POSITIONS');
-        const positionsUrl = `https://data-api.polymarket.com/positions?user=${PROXY_WALLET}`;
+        const positionsUrl = `${ENV.POLYMARKET_URL}/positions?user=${PROXY_WALLET}`;
         const positions: Position[] = await fetchData(positionsUrl);
 
         if (positions && positions.length > 0) {
@@ -105,7 +105,7 @@ const checkMyStats = async () => {
         // 3. Trade History (last 50)
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
         console.log('📜 TRADE HISTORY (last 20)\n');
-        const activityUrl = `https://data-api.polymarket.com/activity?user=${PROXY_WALLET}&type=TRADE`;
+        const activityUrl = `${ENV.POLYMARKET_URL}/activity?user=${PROXY_WALLET}&type=TRADE`;
         const activities: Activity[] = await fetchData(activityUrl);
 
         if (activities && activities.length > 0) {

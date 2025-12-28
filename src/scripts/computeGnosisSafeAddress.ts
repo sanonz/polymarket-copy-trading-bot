@@ -100,7 +100,7 @@ async function computeGnosisSafeAddress() {
 
                                     // Проверяем позиции
                                     const positions: any[] = await fetchData(
-                                        `https://data-api.polymarket.com/positions?user=${proxyAddress}`
+                                        `${ENV.POLYMARKET_URL}/positions?user=${proxyAddress}`
                                     );
 
                                     console.log(`   Позиций на Proxy: ${positions?.length || 0}\n`);
@@ -178,7 +178,7 @@ async function computeGnosisSafeAddress() {
 
                 // Проверяем позиции
                 const positions: any[] = await fetchData(
-                    `https://data-api.polymarket.com/positions?user=${suspectAddress}`
+                    `${ENV.POLYMARKET_URL}/positions?user=${suspectAddress}`
                 );
 
                 console.log(`\n   Позиций на этом адресе: ${positions?.length || 0}\n`);

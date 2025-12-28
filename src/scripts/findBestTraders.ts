@@ -93,7 +93,7 @@ async function fetchTraderLeaderboard(): Promise<string[]> {
         console.log(colors.cyan('📊 Fetching trader leaderboard from Polymarket...'));
 
         // Try to get top traders from events/markets
-        const response = await request.get('https://data-api.polymarket.com/markets', {
+        const response = await request.get(`${ENV.POLYMARKET_URL}/markets`, {
             timeout: 10000,
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -107,7 +107,7 @@ async function fetchTraderLeaderboard(): Promise<string[]> {
         const markets = response.data.slice(0, 5);
         for (const market of markets) {
             try {
-                const tradesUrl = `https://data-api.polymarket.com/trades?market=${market.conditionId}&limit=100`;
+                const tradesUrl = `${ENV.POLYMARKET_URL}/trades?market=${market.conditionId}&limit=100`;
                 const tradesResp = await request.get(tradesUrl, { timeout: 5000 });
 
                 tradesResp.data.forEach((trade: any) => {
@@ -140,7 +140,7 @@ async function fetchBatch(
 ): Promise<Trade[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
+            `${ENV.POLYMARKET_URL}/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
             {
                 timeout: 10000,
                 headers: {
@@ -225,7 +225,7 @@ async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
 async function fetchTraderPositions(traderAddress: string): Promise<Position[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/positions?user=${traderAddress}`,
+            `${ENV.POLYMARKET_URL}/positions?user=${traderAddress}`,
             {
                 timeout: 10000,
                 headers: {

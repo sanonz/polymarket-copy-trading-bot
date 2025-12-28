@@ -107,7 +107,7 @@ const MAX_TRADES_LIMIT = (() => {
 
 async function fetchBatch(offset: number, limit: number, sinceTimestamp: number): Promise<Trade[]> {
     const response = await request.get(
-        `https://data-api.polymarket.com/activity?user=${TRADER_ADDRESS}&type=TRADE&limit=${limit}&offset=${offset}`,
+        `${ENV.POLYMARKET_URL}/activity?user=${TRADER_ADDRESS}&type=TRADE&limit=${limit}&offset=${offset}`,
         {
             timeout: 10000,
             headers: {
@@ -242,7 +242,7 @@ async function fetchTraderPositions(): Promise<Position[]> {
     try {
         console.log(colors.cyan('📈 Fetching trader positions...'));
         const response = await request.get(
-            `https://data-api.polymarket.com/positions?user=${TRADER_ADDRESS}`,
+            `${ENV.POLYMARKET_URL}/positions?user=${TRADER_ADDRESS}`,
             {
                 timeout: 10000,
                 headers: {

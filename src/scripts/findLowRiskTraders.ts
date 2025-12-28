@@ -4,6 +4,7 @@ import moment from 'moment';
 import * as fs from 'fs';
 import * as path from 'path';
 import { request } from '../utils/request';
+import { ENV } from '../config/env';
 
 // Load environment variables (optional for this script)
 dotenv.config();
@@ -124,7 +125,7 @@ const MIN_ROI_THRESHOLD = parseFloat(process.env.MIN_ROI_THRESHOLD || '10.0'); /
 async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
     try {
         const cutoffTime = Math.floor(Date.now() / 1000) - HISTORY_DAYS * 24 * 60 * 60;
-        const url = `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE`;
+        const url = `${ENV.POLYMARKET_URL}/activity?user=${traderAddress}&type=TRADE`;
         const activities = await fetchData(url);
 
         if (!Array.isArray(activities)) {
@@ -441,7 +442,7 @@ async function analyzeTrader(traderAddress: string): Promise<TraderAnalysis> {
 
         // Get current positions from API
         const currentPositions: Position[] = await fetchData(
-            `https://data-api.polymarket.com/positions?user=${traderAddress}`
+            `${ENV.POLYMARKET_URL}/positions?user=${traderAddress}`
         );
 
         // Update positions with current values

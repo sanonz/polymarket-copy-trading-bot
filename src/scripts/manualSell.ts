@@ -81,7 +81,7 @@ const createClobClient = async (
 };
 
 const fetchPositions = async (): Promise<Position[]> => {
-    const url = `https://data-api.polymarket.com/positions?user=${PROXY_WALLET}`;
+    const url = `${ENV.POLYMARKET_URL}/positions?user=${PROXY_WALLET}`;
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error(`Failed to fetch positions: ${response.statusText}`);

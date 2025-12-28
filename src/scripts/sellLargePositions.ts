@@ -253,7 +253,7 @@ async function main() {
         // Получаем все позиции
         console.log('📥 Fetching positions...');
         const positions: Position[] = await fetchData(
-            `https://data-api.polymarket.com/positions?user=${PROXY_WALLET}`
+            `${ENV.POLYMARKET_URL}/positions?user=${PROXY_WALLET}`
         );
         console.log(`Found ${positions.length} position(s)\n`);
 

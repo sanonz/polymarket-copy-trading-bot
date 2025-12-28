@@ -25,7 +25,7 @@ async function checkPositions() {
     console.log('\n📊 CURRENT POSITIONS:\n');
 
     const positions: Position[] = await fetchData(
-        `https://data-api.polymarket.com/positions?user=${PROXY_WALLET}`
+        `${ENV.POLYMARKET_URL}/positions?user=${PROXY_WALLET}`
     );
 
     if (!positions || positions.length === 0) {

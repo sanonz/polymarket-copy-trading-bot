@@ -59,14 +59,14 @@ async function analyzeWallets() {
 
     try {
         const proxyPositions: any[] = await fetchData(
-            `https://data-api.polymarket.com/positions?user=${PROXY_WALLET}`
+            `${ENV.POLYMARKET_URL}/positions?user=${PROXY_WALLET}`
         );
         console.log(`   PROXY_WALLET (${PROXY_WALLET.slice(0, 10)}...):`);
         console.log(`   • Позиций: ${proxyPositions?.length || 0}\n`);
 
         if (eoaAddress.toLowerCase() !== PROXY_WALLET.toLowerCase()) {
             const eoaPositions: any[] = await fetchData(
-                `https://data-api.polymarket.com/positions?user=${eoaAddress}`
+                `${ENV.POLYMARKET_URL}/positions?user=${eoaAddress}`
             );
             console.log(`   EOA (${eoaAddress.slice(0, 10)}...):`);
             console.log(`   • Позиций: ${eoaPositions?.length || 0}\n`);
@@ -81,7 +81,7 @@ async function analyzeWallets() {
 
     try {
         const activities: any[] = await fetchData(
-            `https://data-api.polymarket.com/activity?user=${PROXY_WALLET}&type=TRADE`
+            `${ENV.POLYMARKET_URL}/activity?user=${PROXY_WALLET}&type=TRADE`
         );
 
         if (activities && activities.length > 0) {

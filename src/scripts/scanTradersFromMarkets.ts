@@ -134,7 +134,7 @@ async function validateAddressesBatch(addresses: string[]): Promise<string[]> {
         const promises = chunk.map(async (address) => {
             try {
                 const response = await request.get(
-                    `https://data-api.polymarket.com/activity?user=${address}&type=TRADE&limit=1`,
+                    `${ENV.POLYMARKET_URL}/activity?user=${address}&type=TRADE&limit=1`,
                     {
                         timeout: 5000,
                         headers: { 'User-Agent': 'Mozilla/5.0' },
@@ -241,7 +241,7 @@ async function expandNetworkFromTrader(
 ): Promise<string[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${depth}`,
+            `${ENV.POLYMARKET_URL}/activity?user=${traderAddress}&type=TRADE&limit=${depth}`,
             {
                 timeout: 10000,
                 headers: { 'User-Agent': 'Mozilla/5.0' },
@@ -429,7 +429,7 @@ async function fetchTraderActivityBatch(
 ): Promise<Trade[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
+            `${ENV.POLYMARKET_URL}/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
             {
                 timeout: 10000,
                 headers: {
@@ -511,7 +511,7 @@ async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
 async function fetchTraderPositions(traderAddress: string): Promise<Position[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/positions?user=${traderAddress}`,
+            `${ENV.POLYMARKET_URL}/positions?user=${traderAddress}`,
             {
                 timeout: 10000,
                 headers: {

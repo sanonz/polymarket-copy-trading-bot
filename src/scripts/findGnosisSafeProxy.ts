@@ -25,7 +25,7 @@ async function findGnosisSafeProxy() {
 
     try {
         const eoaPositions: any[] = await fetchData(
-            `https://data-api.polymarket.com/positions?user=${eoaAddress}`
+            `${ENV.POLYMARKET_URL}/positions?user=${eoaAddress}`
         );
         console.log(`   Позиций: ${eoaPositions?.length || 0}\n`);
 
@@ -42,7 +42,7 @@ async function findGnosisSafeProxy() {
 
     try {
         const activities: any[] = await fetchData(
-            `https://data-api.polymarket.com/activity?user=${eoaAddress}&type=TRADE`
+            `${ENV.POLYMARKET_URL}/activity?user=${eoaAddress}&type=TRADE`
         );
 
         if (activities && activities.length > 0) {
@@ -58,7 +58,7 @@ async function findGnosisSafeProxy() {
 
                 // Проверяем позиции на proxy
                 const proxyPositions: any[] = await fetchData(
-                    `https://data-api.polymarket.com/positions?user=${proxyWalletFromTrade}`
+                    `${ENV.POLYMARKET_URL}/positions?user=${proxyWalletFromTrade}`
                 );
 
                 console.log(`   Позиций на Proxy: ${proxyPositions?.length || 0}\n`);

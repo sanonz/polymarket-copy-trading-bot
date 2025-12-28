@@ -52,10 +52,10 @@ const checkBothWallets = async () => {
         console.log(`   Profile: https://polymarket.com/profile/${ADDRESS_1}\n`);
 
         const addr1Activities: Activity[] = await fetchData(
-            `https://data-api.polymarket.com/activity?user=${ADDRESS_1}&type=TRADE`
+            `${ENV.POLYMARKET_URL}/activity?user=${ADDRESS_1}&type=TRADE`
         );
         const addr1Positions: Position[] = await fetchData(
-            `https://data-api.polymarket.com/positions?user=${ADDRESS_1}`
+            `${ENV.POLYMARKET_URL}/positions?user=${ADDRESS_1}`
         );
 
         console.log(`   • Trades in API: ${addr1Activities?.length || 0}`);
@@ -94,10 +94,10 @@ const checkBothWallets = async () => {
         console.log(`   Profile: https://polymarket.com/profile/${ADDRESS_2}\n`);
 
         const addr2Activities: Activity[] = await fetchData(
-            `https://data-api.polymarket.com/activity?user=${ADDRESS_2}&type=TRADE`
+            `${ENV.POLYMARKET_URL}/activity?user=${ADDRESS_2}&type=TRADE`
         );
         const addr2Positions: Position[] = await fetchData(
-            `https://data-api.polymarket.com/positions?user=${ADDRESS_2}`
+            `${ENV.POLYMARKET_URL}/positions?user=${ADDRESS_2}`
         );
 
         console.log(`   • Trades in API: ${addr2Activities?.length || 0}`);

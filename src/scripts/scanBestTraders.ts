@@ -143,7 +143,7 @@ async function fetchActiveMarkets(limit: number = 50): Promise<any[]> {
         for (const trader of seedTraders) {
             try {
                 const response = await request.get(
-                    `https://data-api.polymarket.com/activity?user=${trader}&type=TRADE&limit=50`,
+                    `${ENV.POLYMARKET_URL}/activity?user=${trader}&type=TRADE&limit=50`,
                     {
                         timeout: 10000,
                         headers: {
@@ -188,7 +188,7 @@ async function fetchActiveMarkets(limit: number = 50): Promise<any[]> {
 async function fetchRecentTrades(traderAddress: string, limit: number = 100): Promise<Bet[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}`,
+            `${ENV.POLYMARKET_URL}/activity?user=${traderAddress}&type=TRADE&limit=${limit}`,
             {
                 timeout: 10000,
                 headers: {
@@ -357,7 +357,7 @@ async function fetchTraderActivityBatch(
 ): Promise<Trade[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
+            `${ENV.POLYMARKET_URL}/activity?user=${traderAddress}&type=TRADE&limit=${limit}&offset=${offset}`,
             {
                 timeout: 10000,
                 headers: {
@@ -446,7 +446,7 @@ async function fetchTraderActivity(traderAddress: string): Promise<Trade[]> {
 async function fetchTraderPositions(traderAddress: string): Promise<Position[]> {
     try {
         const response = await request.get(
-            `https://data-api.polymarket.com/positions?user=${traderAddress}`,
+            `${ENV.POLYMARKET_URL}/positions?user=${traderAddress}`,
             {
                 timeout: 10000,
                 headers: {

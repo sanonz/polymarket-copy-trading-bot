@@ -60,7 +60,7 @@ const fetchBatch = async (
     limit: number
 ): Promise<TradeApiResponse[]> => {
     const response = await request.get(
-        `https://data-api.polymarket.com/activity?user=${address}&type=TRADE&limit=${limit}&offset=${offset}`,
+        `${ENV.POLYMARKET_URL}/activity?user=${address}&type=TRADE&limit=${limit}&offset=${offset}`,
         {
             timeout: 15000,
             headers: {

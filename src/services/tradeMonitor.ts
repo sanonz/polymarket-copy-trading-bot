@@ -29,7 +29,7 @@ const init = async () => {
 
     // Show your own positions first
     try {
-        const myPositionsUrl = `https://data-api.polymarket.com/positions?user=${ENV.PROXY_WALLET}`;
+        const myPositionsUrl = `${ENV.POLYMARKET_URL}/positions?user=${ENV.PROXY_WALLET}`;
         const myPositions = await fetchData(myPositionsUrl);
 
         // Get current USDC balance
@@ -109,7 +109,7 @@ const fetchTradeData = async () => {
     for (const { address, UserActivity, UserPosition } of userModels) {
         try {
             // Fetch trade activities from Polymarket API
-            const apiUrl = `https://data-api.polymarket.com/activity?user=${address}&type=TRADE`;
+            const apiUrl = `${ENV.POLYMARKET_URL}/activity?user=${address}&type=TRADE`;
             const activities = await fetchData(apiUrl);
 
             if (!Array.isArray(activities) || activities.length === 0) {
@@ -164,7 +164,7 @@ const fetchTradeData = async () => {
             }
 
             // Also fetch and update positions
-            const positionsUrl = `https://data-api.polymarket.com/positions?user=${address}`;
+            const positionsUrl = `${ENV.POLYMARKET_URL}/positions?user=${address}`;
             const positions = await fetchData(positionsUrl);
 
             if (Array.isArray(positions) && positions.length > 0) {

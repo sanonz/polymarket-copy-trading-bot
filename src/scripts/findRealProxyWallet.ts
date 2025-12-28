@@ -21,7 +21,7 @@ async function findRealProxyWallet() {
 
     try {
         // Пробуем получить профиль пользователя
-        const userProfile = await fetchData(`https://data-api.polymarket.com/users/${eoaAddress}`);
+        const userProfile = await fetchData(`${ENV.POLYMARKET_URL}/users/${eoaAddress}`);
 
         console.log('   Данные профиля:', JSON.stringify(userProfile, null, 2), '\n');
     } catch (error) {
@@ -87,7 +87,7 @@ async function findRealProxyWallet() {
 
                                         // Проверяем есть ли позиции на этом адресе
                                         const positions: any[] = await fetchData(
-                                            `https://data-api.polymarket.com/positions?user=${log.address}`
+                                            `${ENV.POLYMARKET_URL}/positions?user=${log.address}`
                                         );
 
                                         if (positions && positions.length > 0) {
@@ -168,7 +168,7 @@ async function findRealProxyWallet() {
 
             for (const recipient of Array.from(recipients).slice(0, 5)) {
                 const positions: any[] = await fetchData(
-                    `https://data-api.polymarket.com/positions?user=${recipient}`
+                    `${ENV.POLYMARKET_URL}/positions?user=${recipient}`
                 );
 
                 if (positions && positions.length > 0) {
