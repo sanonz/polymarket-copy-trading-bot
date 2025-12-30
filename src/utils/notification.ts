@@ -10,7 +10,7 @@ export async function sendMessageToTelegram(text: string) {
         return null;
     }
 
-    const rsp = await request.post(`${api}bot${token}/sendMessage`, {
+    const rsp = await request.post(`${api}/bot${token}/sendMessage`, {
         chat_id: chatId,
         text,
         parse_mode: 'MarkdownV2',
