@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
 import { UserActivityInterface } from '../interfaces/User';
-import { addEscape, sendMessageToTelegram } from './notification';
+import { sendMessageToTelegram } from './notification';
 
 class Logger {
     private static logsDir = path.join(process.cwd(), 'logs');
@@ -124,29 +124,27 @@ class Logger {
         );
     }
 
-    static orderResult(success: boolean, message: string, trade: UserActivityInterface) {
+    static async orderResult(success: boolean, message: string, trade: UserActivityInterface) {
         if (success) {
             console.log(chalk.green('✓'), chalk.green.bold('Order executed:'), message);
             this.writeToFile(`ORDER SUCCESS: ${message}`);
-            sendMessageToTelegram(
+            const shortHash = `${trade.transactionHash.substring(0, 8)}...${trade.transactionHash.substring(trade.transactionHash.length - 8)}`;
+            await sendMessageToTelegram(
                 [
-                    `[${addEscape(trade.title)}](https://polymarket.com/event/${trade.slug})`,
-                    `✅ Order executed: ${this.stripAnsi(message)}`,
+                    `📅 [${trade.title}](https://polymarket.com/event/${trade.eventSlug || trade.slug})`,
+                    `#️⃣ [${shortHash}](https://polygonscan.com/tx/${trade.transactionHash})`,
+                    `✅ Order executed: ${message}`,
                 ].join('\n')
-            )
-                .then(console.log)
-                .catch(console.error);
+            ).catch(console.error);
         } else {
             console.log(chalk.red('✗'), chalk.red.bold('Order failed:'), message);
             this.writeToFile(`ORDER FAILED: ${message}`);
             sendMessageToTelegram(
                 [
-                    `[${addEscape(trade.title)}](https://polymarket.com/event/${trade.slug})`,
-                    `❌ Order failed: ${this.stripAnsi(message)}`,
+                    `📅 [${trade.title}](https://polymarket.com/event/${trade.eventSlug || trade.slug})`,
+                    `❌ Order failed: ${message}`,
                 ].join('\n')
-            )
-                .then(console.log)
-                .catch(console.error);
+            ).catch(console.error);
         }
     }
 
