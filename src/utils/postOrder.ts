@@ -220,6 +220,11 @@ const postOrder = async (
                 await UserActivity.updateOne({ _id: trade._id }, { bot: true });
                 break;
             }
+            if (parseFloat(minPriceAsk.price) === 0.999) {
+                Logger.warning('Detected invalid ask price (0.999) - skipping trade');
+                await UserActivity.updateOne({ _id: trade._id }, { bot: true });
+                break;
+            }
 
             // Check if remaining amount is below minimum before creating order
             if (remaining < MIN_ORDER_SIZE_USD) {
