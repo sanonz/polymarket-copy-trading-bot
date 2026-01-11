@@ -129,7 +129,7 @@ class Logger {
             console.log(chalk.green('✓'), chalk.green.bold('Order executed:'), message);
             this.writeToFile(`ORDER SUCCESS: ${message}`);
             const shortHash = `${trade.transactionHash.substring(0, 8)}...${trade.transactionHash.substring(trade.transactionHash.length - 8)}`;
-            await sendMessageToTelegram(
+            sendMessageToTelegram(
                 [
                     `📅 [${trade.title}](https://polymarket.com/event/${trade.eventSlug || trade.slug})`,
                     `#️⃣ [${shortHash}](https://polygonscan.com/tx/${trade.transactionHash})`,

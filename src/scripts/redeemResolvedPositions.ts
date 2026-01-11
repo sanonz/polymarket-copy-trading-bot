@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import { ENV } from '../config/env';
 import fetchData from '../utils/fetchData';
+import { sendMessageToTelegram } from '../utils/notification';
 
 const PROXY_WALLET = ENV.PROXY_WALLET;
 const PRIVATE_KEY = ENV.PRIVATE_KEY;
@@ -8,7 +9,7 @@ const RPC_URL = ENV.RPC_URL || 'https://polygon-rpc.com';
 
 // Contract addresses on Polygon
 const CTF_CONTRACT_ADDRESS = '0x4D97DCd97eC945f40cF65F87097ACe5EA0476045';
-const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'; // USDC on Polygon
+const USDC_ADDRESS = ENV.USDC_CONTRACT_ADDRESS; // USDC on Polygon
 
 // Thresholds for considering a position "resolved"
 const RESOLVED_HIGH = 0.99; // Position won (price ~$1)
@@ -94,6 +95,18 @@ const redeemPosition = async (
 
         if (receipt.status === 1) {
             console.log(`   ✅ Redemption successful! Gas used: ${receipt.gasUsed.toString()}`);
+            const shortHash = `${tx.hash.substring(0, 8)}...${tx.hash.substring(tx.hash.length - 8)}`;
+            sendMessageToTelegram(
+                [
+                    `📅 [${position.title}](https://polymarket.com/event/${position.slug})`,
+                    `#️⃣ [${shortHash}](https://polygonscan.com/tx/${tx.hash})`,
+                    position.outcome ? `🎰 Outcome: ${position.outcome}` : '',
+                    `🪙 Size: ${position.size.toFixed(2)} tokens`,
+                    `💰 Current price: ${position.curPrice.toFixed(4)}`,
+                    `💵 Expected value: ${position.currentValue.toFixed(2)}`,
+                    `✅ Redemption successful! Gas used: ${receipt.gasUsed.toString()}`,
+                ].join('\n')
+            ).catch(console.error);
             return { success: true };
         } else {
             console.log(`   ❌ Transaction failed`);
